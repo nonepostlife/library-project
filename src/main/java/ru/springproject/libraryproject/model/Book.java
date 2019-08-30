@@ -13,11 +13,12 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idbook;
 
-    @NotNull
-    @Size(max = 100)
-    @Column(unique = true)
+//    @NotNull
+//    @Size(max = 100)
+//    @Column(name = "bookName")
     private String bookName;
 
+//    @Column(name = "bookYearWriting")
     private int bookYearWriting;
 
     @ManyToMany(fetch = FetchType.EAGER,    // EAGER, LAZY

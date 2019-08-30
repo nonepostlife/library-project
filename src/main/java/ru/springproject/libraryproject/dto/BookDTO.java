@@ -11,7 +11,7 @@ public class BookDTO {
     private int idbook;
     private String bookName;
     private int bookYearWriting;
-    private List<AuthorDTO> authors;
+    private List<String> authors;
 
     @Transactional
     public List<BookDTO> getBookDTOList(List<Book> bookList){
@@ -28,11 +28,11 @@ public class BookDTO {
 
             for(Author author : book.getAuthors())
             {
-                AuthorDTO authorDTO = new AuthorDTO();
-                authorDTO.setIdAuthor(author.getIdAuthor());
-                authorDTO.setAuthorName(author.getAuthorName());
+//                AuthorDTO authorDTO = new AuthorDTO();
+//                authorDTO.setIdAuthor(author.getIdAuthor());
+//                authorDTO.setAuthorName(author.getAuthorName());
 
-                authors.add(authorDTO);
+                authors.add(author.getAuthorName());
             }
             bookDTO.setAuthors(authors);
             bookDTOList.add(bookDTO);
@@ -64,11 +64,11 @@ public class BookDTO {
         this.bookYearWriting = bookYearWriting;
     }
 
-    public List<AuthorDTO> getAuthors() {
+    public List<String> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<AuthorDTO> authors) {
+    public void setAuthors(List<String> authors) {
         this.authors = authors;
     }
 }

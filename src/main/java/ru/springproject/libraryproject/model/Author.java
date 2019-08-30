@@ -3,8 +3,8 @@ package ru.springproject.libraryproject.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 @Entity(name = "Author")
@@ -14,16 +14,16 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idauthor;
 
-    @NotNull
-    @Size(max = 100)
-    @Column(unique = true)
+//    @NotNull
+//    @Size(max = 100)
+//    @Column(name = "authorName")
     private String authorName;
 
-    @ManyToMany(fetch = FetchType.EAGER, //LAZY, EAGER
-//            cascade = {
-//                    CascadeType.PERSIST,
-//                    CascadeType.MERGE
-//            },
+    @ManyToMany(fetch = FetchType.EAGER,    //LAZY, EAGER
+            cascade = {
+                    CascadeType.ALL,        //PERSIST, MERGE, ALL
+                    //CascadeType.MERGE
+            },
             mappedBy = "authors")
     private List<Book> books = new ArrayList<>();
 
