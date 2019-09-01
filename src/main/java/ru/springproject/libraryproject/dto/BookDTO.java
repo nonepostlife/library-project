@@ -27,13 +27,8 @@ public class BookDTO {
             bookDTO.setBookYearWriting(book.getBookYearWriting());
 
             for(Author author : book.getAuthors())
-            {
-//                AuthorDTO authorDTO = new AuthorDTO();
-//                authorDTO.setIdAuthor(author.getIdAuthor());
-//                authorDTO.setAuthorName(author.getAuthorName());
-
                 authors.add(author.getAuthorName());
-            }
+
             bookDTO.setAuthors(authors);
             bookDTOList.add(bookDTO);
         }

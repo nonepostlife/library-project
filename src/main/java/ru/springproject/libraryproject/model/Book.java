@@ -1,6 +1,7 @@
 package ru.springproject.libraryproject.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -13,18 +14,15 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idbook;
 
-//    @NotNull
-//    @Size(max = 100)
-//    @Column(name = "bookName")
+    @NotNull
+    @Size(max = 100)
+    @Column(unique = true)
     private String bookName;
-
-//    @Column(name = "bookYearWriting")
     private int bookYearWriting;
 
-    @ManyToMany(fetch = FetchType.EAGER,    // EAGER, LAZY
+    @ManyToMany(fetch = FetchType.LAZY,    // EAGER, LAZY
             cascade = {
                     CascadeType.ALL,        // ALL, PERSIST, MERGE
-                    //CascadeType.MERGE
             })
     @JoinTable(name = "author_book",
             joinColumns = { @JoinColumn(name = "book_id") },
@@ -90,6 +88,6 @@ public class Book {
 
     @Override
     public String toString() {
-        return String.format("Книга %s написана в %d году",  bookName, bookYearWriting);
+        return String.format("[id = %s, name = %s, year = %s]", idbook, bookName, bookYearWriting);
     }
 }

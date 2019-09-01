@@ -14,15 +14,14 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idauthor;
 
-//    @NotNull
-//    @Size(max = 100)
-//    @Column(name = "authorName")
+    @NotNull
+    @Size(max = 100)
+    @Column(name = "authorName")
     private String authorName;
 
-    @ManyToMany(fetch = FetchType.EAGER,    //LAZY, EAGER
+    @ManyToMany(fetch = FetchType.LAZY,    //LAZY, EAGER
             cascade = {
                     CascadeType.ALL,        //PERSIST, MERGE, ALL
-                    //CascadeType.MERGE
             },
             mappedBy = "authors")
     private List<Book> books = new ArrayList<>();
@@ -60,5 +59,10 @@ public class Author {
 
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("[id = %s, author = %s]", idauthor, authorName);
     }
 }
