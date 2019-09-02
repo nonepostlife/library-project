@@ -22,7 +22,8 @@ public class Book {
 
     @ManyToMany(fetch = FetchType.LAZY,    // EAGER, LAZY
             cascade = {
-                    CascadeType.ALL,        // ALL, PERSIST, MERGE
+                    CascadeType.PERSIST,        // ALL, PERSIST, MERGE
+                    CascadeType.MERGE
             })
     @JoinTable(name = "author_book",
             joinColumns = { @JoinColumn(name = "book_id") },

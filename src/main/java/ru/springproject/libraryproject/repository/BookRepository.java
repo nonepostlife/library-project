@@ -31,8 +31,8 @@ public interface BookRepository extends PagingAndSortingRepository<Book, Integer
     @Query("Select b from Book b left join b.authors a where b.bookYearWriting = ?1 group by b having count(a) = ?2")
     List<Book> findAllByBookYearWritingIsAndAuthorsCountIs(int year, long count, Pageable pageable);
 
-    // * Name + Count
-    @Query("Select distinct b from Book b left join b.authors a where b.bookName like CONCAT('%',?1,'%') or a.authorName like CONCAT('%',?2,'%') group by b having count(a) = ?3")
+    //  Name + Count
+    @Query("Select distinct b from Book b left join b.authors a where (b.bookName like CONCAT('%',?1,'%') or a.authorName like CONCAT('%',?2,'%')) group by b.idbook having count(a) = ?3")
     List<Book> findByBookNameOrAuthorNameContainingAndAuthorCountIs(String text, String textAgain, long count, Pageable pageable);
 
     // Year + Name + Count

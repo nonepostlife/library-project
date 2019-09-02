@@ -12,10 +12,7 @@ import ru.springproject.libraryproject.repository.BookRepository;
 import ru.springproject.libraryproject.exception.ResourceNotFoundException;
 import ru.springproject.libraryproject.model.Book;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/books")
@@ -84,5 +81,33 @@ public class BookController {
         }
         else
             return null;
+    }
+
+    @PostMapping("/add")
+    public Book addBook(@RequestBody Book book) {
+        return bookRepository.save(book);
+    }
+
+    @PutMapping("/update/{id}")
+    public Book updateBook(@PathVariable(value = "id") int bookId,
+                           @RequestBody Book bookDetail) {
+
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new ResourceNotFoundException("Book", "id", bookId));
+
+        book.setBookName(bookDetail.getBookName());
+        book.setBookYearWriting(bookDetail.getBookYearWriting());
+
+        Book updateBook = bookRepository.save(book);
+        return updateBook;
+    }
+
+    @DeleteMapping("/remove/{id}")
+    public ResponseEntity<?> removeBook(@PathVariable(value = "id") int bookId) {
+
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new ResourceNotFoundException("Book", "id", bookId));
+        bookRepository.delete(book);
+        return ResponseEntity.ok().build();
     }
 }
