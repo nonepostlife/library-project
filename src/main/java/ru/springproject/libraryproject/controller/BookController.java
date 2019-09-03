@@ -21,7 +21,7 @@ public class BookController {
     @Autowired
     BookRepository bookRepository;
 
-    private final int countElementOnPage = 5;
+    private final int countElementOnPage = 10;
 
     @GetMapping("/page/{numPage}")
     public List<BookDTO> getAllBooks(@PathVariable(value = "numPage") int numPage) {
@@ -34,9 +34,9 @@ public class BookController {
 
     @GetMapping("/search/{numPage}")
     public List<BookDTO> getAllBooksOnRequest(@PathVariable(value = "numPage") int numPage,
-                                              @RequestParam(required = false) String text,
-                                              @RequestParam(required = false) Integer yearWriting,
-                                              @RequestParam(required = false) Long countAuthors)
+                                              @RequestParam(name = "text", required = false) String text,
+                                              @RequestParam(name = "yearWriting",required = false) Integer yearWriting,
+                                              @RequestParam(name = "countAuthors", required = false) Long countAuthors)
     {
         Pageable page = PageRequest.of(numPage, countElementOnPage);
         BookDTO bookDTO = new BookDTO();
