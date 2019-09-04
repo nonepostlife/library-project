@@ -26,37 +26,38 @@ public class AuthorController {
         return authorDTO.getAuthorDTOList(authorRepository.findAll());
     }
 
-//    @GetMapping("/author")
-//    public List<Author> index() {
-//        return authorRepository.findAll();
-//    }
-//
-//    @GetMapping("/author/{id}")
-//    public Author getAuthorById(@PathVariable(value = "id") int authorId) {
-//        return authorRepository.findById(authorId)
-//                .orElseThrow(() -> new ResourceNotFoundException("Author", "id", authorId));
-//    }
-//
-//    @PostMapping("/author")
-//    public Author createAuthor(@Valid @RequestBody Author author) {
-//        return authorRepository.save(author);
-//    }
-//
-//    @PutMapping("/author/{id}")
-//    public Author updateAuthor(@PathVariable(value = "id") int authorId,
-//                           @Valid @RequestBody Author authorDetails) {
-//        Author author = authorRepository.findById(authorId)
-//                .orElseThrow(() -> new ResourceNotFoundException("Author", "id", authorId));
-//
-//        author.setAuthorName(authorDetails.getAuthorName());
-//
-//        Author updateAuthor = authorRepository.save(author);
-//        return updateAuthor;
-//    }
-//
-//    @DeleteMapping("/author/{id}")
-//    public ResponseEntity<?> deleteAuthor(@PathVariable(value = "id") int authorId) {
-//        authorRepository.deleteById(authorId);
-//        return ResponseEntity.ok().build();
-//    }
+    @GetMapping("/{id}")
+    public AuthorDTO getAuthorById(@PathVariable(value = "id") int authorId) {
+        Author currentAuthor = authorRepository.findById(authorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Author", "id", authorId));
+
+        AuthorDTO authorDTO = new AuthorDTO();
+        return authorDTO.getAuthorDTO(currentAuthor);
+    }
+
+    @PostMapping("/add")
+    public Author createAuthor(@Valid @RequestBody Author author) {
+        return authorRepository.save(author);
+    }
+
+    @PutMapping("/update/{id}")
+    public Author updateAuthor(@PathVariable(value = "id") int authorId,
+                           @Valid @RequestBody Author authorDetails) {
+        Author author = authorRepository.findById(authorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Author", "id", authorId));
+
+        author.setAuthorName(authorDetails.getAuthorName());
+
+        Author updateAuthor = authorRepository.save(author);
+        return updateAuthor;
+    }
+
+    @DeleteMapping("/remove/{id}")
+    public ResponseEntity<?> deleteAuthor(@PathVariable(value = "id") int authorId) {
+        Author author = authorRepository.findById(authorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Author", "id", authorId));
+
+        authorRepository.delete(author);
+        return ResponseEntity.ok().build();
+    }
 }

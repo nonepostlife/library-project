@@ -19,7 +19,6 @@ public class AuthorDTO {
         for(Author author : authorList)
         {
             books = new ArrayList<>();
-
             AuthorDTO authorDTO = new AuthorDTO();
             authorDTO.setIdAuthor(author.getIdAuthor());
             authorDTO.setAuthorName(author.getAuthorName());
@@ -27,18 +26,35 @@ public class AuthorDTO {
             for(Book book : author.getBooks())
             {
                 BookDTO bookDTO = new BookDTO();
-
                 bookDTO.setIdBook(book.getIdBook());
                 bookDTO.setBookName(book.getBookName());
                 bookDTO.setBookYearWriting(book.getBookYearWriting());
-
                 books.add(bookDTO);
             }
-
             authorDTO.setBooks(books);
             authorDTOList.add(authorDTO);
         }
         return authorDTOList;
+    }
+
+    @Transactional
+    public AuthorDTO getAuthorDTO(Author author)
+    {
+        books = new ArrayList<>();
+        AuthorDTO authorDTO = new AuthorDTO();
+        authorDTO.setIdAuthor(author.getIdAuthor());
+        authorDTO.setAuthorName(author.getAuthorName());
+
+        for(Book book : author.getBooks())
+        {
+            BookDTO bookDTO = new BookDTO();
+            bookDTO.setIdBook(book.getIdBook());
+            bookDTO.setBookName(book.getBookName());
+            bookDTO.setBookYearWriting(book.getBookYearWriting());
+            books.add(bookDTO);
+        }
+        authorDTO.setBooks(books);
+        return authorDTO;
     }
 
     public int getIdAuthor() {
